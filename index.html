@@ -346,7 +346,7 @@
         <span class="status-message" id="status-message" role="status" aria-live="polite"></span>
       </div>
       <div class="empty-state" id="empty-state">
-        <img class="empty-art" src="https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?auto=format&amp;fit=crop&amp;w=700&amp;q=85" alt="A colorful painting displayed in an art gallery">
+        <img class="empty-art" src="images/img_5261.webp" alt="Artwork from the collection">
         <div class="empty-copy">
           <p class="eyebrow">Your studio, online</p>
           <h2>Make room for your work.</h2>
@@ -402,6 +402,11 @@
       image.src = artwork.image;
       image.alt = artwork.title || 'Artwork';
       image.loading = 'lazy';
+      image.decoding = 'async';
+      if (Number.isInteger(artwork.width) && artwork.width > 0 && Number.isInteger(artwork.height) && artwork.height > 0) {
+        image.width = artwork.width;
+        image.height = artwork.height;
+      }
 
       image.addEventListener('error', () => {
         imageWrap.textContent = `Image not found: ${artwork.image}`;

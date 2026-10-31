@@ -4,7 +4,7 @@ A static art gallery hosted with GitHub Pages.
 
 ## Add artwork
 
-Put image files in `images/`, then add an entry for each file to `artworks.json`:
+Put optimized image files in `images/`, then add an entry for each file to `artworks.json`:
 
 ```json
 [
@@ -17,6 +17,7 @@ Put image files in `images/`, then add an entry for each file to `artworks.json`
 ```
 
 Image paths are relative to the repository root. Commit and push the image files and `artworks.json` to `main` to publish the updated gallery.
+Gallery cards load images lazily. For fast loading, keep each image under 300 KB; the uploaded collection is converted to WebP and compressed to stay below that limit.
 
 ## GitHub Pages
 

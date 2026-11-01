@@ -3,19 +3,19 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#ffffff">
-  <title>Josh L. Pop Art | Selected Works</title>
+  <meta name="theme-color" content="#f6f5f0">
+  <title>Gallery of Art</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display&display=swap" rel="stylesheet">
   <style>
     :root {
       color-scheme: light;
-      --paper: #ffffff;
-      --ink: #1c1c1a;
-      --muted: #6d6e69;
-      --line: #deded9;
-      --accent: #ad382c;
+      --paper: #f6f5f0;
+      --ink: #20231f;
+      --muted: #656962;
+      --line: #d7d8d1;
+      --accent: #e44c35;
       --green: #355747;
       --serif: "DM Serif Display", Georgia, serif;
       --sans: "DM Sans", sans-serif;
@@ -25,40 +25,46 @@
 
     body {
       margin: 0;
-      background: var(--paper);
+      background-color: var(--paper);
+      background-image: repeating-linear-gradient(0deg, transparent, transparent 3px, rgb(32 35 31 / 1.5%) 4px);
       color: var(--ink);
       font-family: var(--sans);
       -webkit-font-smoothing: antialiased;
     }
 
-    button { font: inherit; }
+    button, input, textarea { font: inherit; }
     button { color: inherit; }
 
     .site-header {
-      position: sticky;
-      top: 0;
-      z-index: 5;
-      height: 72px;
-      padding: 0 5vw;
+      height: 74px;
+      padding: 0 6vw;
       display: flex;
       align-items: center;
       justify-content: space-between;
       border-bottom: 1px solid var(--line);
-      background: rgb(255 255 255 / 96%);
-      backdrop-filter: blur(12px);
     }
 
     .wordmark {
       display: flex;
       align-items: center;
-      color: var(--ink);
-      font-size: 12px;
+      gap: 10px;
+      font-size: 13px;
       font-weight: 700;
       text-transform: uppercase;
-      text-decoration: none;
     }
 
-    nav { display: flex; align-items: center; gap: 32px; }
+    .mark {
+      width: 25px;
+      height: 25px;
+      display: grid;
+      place-items: center;
+      background: var(--accent);
+      color: white;
+      font-family: var(--serif);
+      font-size: 17px;
+    }
+
+    nav { display: flex; align-items: center; gap: 28px; }
 
     .nav-link {
       padding: 8px 0;
@@ -67,10 +73,7 @@
       background: none;
       color: var(--muted);
       cursor: pointer;
-      color: var(--muted);
-      font-size: 11px;
-      font-weight: 600;
-      text-transform: uppercase;
+      font-size: 13px;
     }
 
     .nav-link[aria-current="page"] {
@@ -78,7 +81,7 @@
       color: var(--ink);
     }
 
-    main { min-height: calc(100vh - 72px); }
+    main { min-height: calc(100vh - 74px); }
 
     .page { display: none; }
     .page.is-active { display: block; animation: appear 260ms ease both; }
@@ -88,13 +91,14 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
-    .gallery-page, .about-page { max-width: 1600px; margin: 0 auto; padding: 54px 5vw 96px; }
+    .gallery-page, .about-page { max-width: 1440px; margin: 0 auto; padding: 72px 6vw 100px; }
 
     .eyebrow {
       margin: 0 0 14px;
-      color: var(--muted);
-      font-size: 10px;
-      font-weight: 600;
+      color: var(--green);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.4px;
       text-transform: uppercase;
     }
 
@@ -103,7 +107,7 @@
     h1 {
       margin-bottom: 0;
       font-family: var(--serif);
-      font-size: 76px;
+      font-size: clamp(52px, 8vw, 104px);
       font-weight: 400;
       line-height: 0.98;
     }
@@ -120,10 +124,28 @@
     .gallery-summary {
       margin: 18px 0 0;
       color: var(--muted);
-      font-size: 15px;
+      font-size: 14px;
     }
 
-    .nav-link:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+    .upload-button {
+      min-height: 46px;
+      padding: 0 18px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      border: 0;
+      background: var(--accent);
+      color: white;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 700;
+      transition: background 160ms ease, transform 160ms ease;
+    }
+
+    .upload-button:hover { background: #c83d2a; transform: translateY(-1px); }
+    .upload-button:focus-visible, .nav-link:focus-visible, .remove-button:focus-visible, .text-field:focus-visible { outline: 2px solid var(--green); outline-offset: 3px; }
+    #file-input { display: none; }
 
     .gallery-status {
       min-height: 48px;
@@ -144,14 +166,20 @@
       gap: 34px 22px;
     }
 
-    .artwork { min-width: 0; animation: appear 320ms ease both; }
+    .artwork {
+      min-width: 0;
+      overflow: hidden;
+      background: #fff;
+      border: 1px solid rgb(32 35 31 / 9%);
+      animation: appear 320ms ease both;
+    }
 
     .art-image-wrap {
       position: relative;
       display: grid;
       place-items: center;
-      min-height: 120px;
-      background: #f0efeb;
+      min-height: 140px;
+      background: #e8e7e1;
     }
 
     .art-image {
@@ -162,12 +190,41 @@
       object-fit: contain;
     }
 
-    .art-caption { margin-top: 12px; padding: 12px 0 18px; border-top: 1px solid var(--line); }
+    .remove-button {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border: 0;
+      background: rgb(32 35 31 / 78%);
+      color: white;
+      cursor: pointer;
+      font-size: 21px;
+      line-height: 1;
+    }
+
+    .art-caption { padding: 14px 15px 16px; }
+
+    .text-field {
+      width: 100%;
+      display: block;
+      border: 0;
+      border-bottom: 1px solid transparent;
+      border-radius: 0;
+      background: transparent;
+      color: var(--ink);
+    }
+
+    .text-field:hover { border-bottom-color: var(--line); }
+    .text-field::placeholder { color: #858980; opacity: 1; }
 
     .art-title {
       padding: 2px 0 6px;
       font-family: var(--serif);
-      font-size: 21px;
+      font-size: 23px;
     }
 
     .art-description {
@@ -179,13 +236,61 @@
       line-height: 1.6;
     }
 
-    .about-copy p { color: var(--muted); font-size: 16px; line-height: 1.9; }
+    .empty-state {
+      min-height: 380px;
+      display: grid;
+      grid-template-columns: minmax(220px, 0.8fr) 1.2fr;
+      align-items: center;
+      gap: 7vw;
+      padding: 48px 6vw;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .empty-art {
+      width: 100%;
+      max-width: 350px;
+      aspect-ratio: 4 / 5;
+      justify-self: end;
+      object-fit: cover;
+      box-shadow: 12px 12px 0 #d9ddd5;
+    }
+
+    .empty-copy { max-width: 470px; }
+    .empty-copy h2, .about-copy h2 { margin-bottom: 12px; font-family: var(--serif); font-size: 38px; font-weight: 400; }
+    .empty-copy p, .about-copy p { color: var(--muted); font-size: 14px; line-height: 1.8; }
+    .empty-copy .upload-button { margin-top: 8px; }
+    .hidden { display: none !important; }
 
     .about-page { display: none; }
-    .about-page.is-active { display: grid; grid-template-columns: 0.8fr 1.2fr; gap: 8vw; }
+    .about-page.is-active { display: grid; grid-template-columns: 0.8fr 1.2fr; gap: 9vw; }
     .about-heading { position: sticky; top: 50px; align-self: start; }
-    .about-heading h1 { max-width: 480px; font-size: 72px; }
-    .about-copy { max-width: 680px; padding-top: 12px; }
+    .about-heading h1 { max-width: 480px; font-size: clamp(54px, 7vw, 88px); }
+    .about-copy { max-width: 640px; padding-top: 12px; }
+    .about-copy h2 { margin-top: 44px; }
+
+    .bio-field {
+      width: 100%;
+      min-height: 200px;
+      padding: 16px;
+      border: 1px solid var(--line);
+      background: rgb(255 255 255 / 64%);
+      color: var(--ink);
+      font-size: 14px;
+      line-height: 1.8;
+      resize: vertical;
+    }
+
+    .bio-field:focus-visible { outline: 2px solid var(--green); outline-offset: 2px; }
+    .save-note { min-height: 20px; margin-top: 8px; color: var(--green); font-size: 12px; }
+
+    .site-footer {
+      padding: 20px 6vw;
+      display: flex;
+      justify-content: space-between;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 11px;
+    }
 
     @media (max-width: 900px) {
       .art-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -193,19 +298,21 @@
 
     @media (max-width: 600px) {
       .site-header { height: 64px; padding: 0 20px; }
-      .wordmark { font-size: 10px; }
-      nav { gap: 16px; }
-      .nav-link { font-size: 10px; }
+      nav { gap: 17px; }
+      .nav-link { font-size: 12px; }
       main { min-height: calc(100vh - 64px); }
-      .gallery-page, .about-page { padding: 42px 20px 68px; }
+      .gallery-page, .about-page { padding: 52px 20px 72px; }
       .gallery-intro { align-items: start; flex-direction: column; gap: 22px; }
-      h1 { font-size: 48px; }
+      h1 { font-size: 62px; }
       .gallery-summary { font-size: 13px; }
       .art-grid { grid-template-columns: 1fr; gap: 22px; }
+      .empty-state { grid-template-columns: 1fr; gap: 38px; padding: 42px 20px 55px; }
+      .empty-art { width: min(74%, 300px); justify-self: center; }
       .about-page.is-active { grid-template-columns: 1fr; gap: 34px; }
       .about-heading { position: static; }
-      .about-heading h1 { font-size: 48px; }
+      .about-heading h1 { font-size: 62px; }
       .about-copy { padding-top: 0; }
+      .site-footer { padding: 18px 20px; }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -215,10 +322,13 @@
 </head>
 <body>
   <header class="site-header">
-    <a class="wordmark" href="#gallery-page" aria-label="Josh L. Pop Art home">Josh L. Pop Art</a>
+    <a class="wordmark" href="#gallery" aria-label="Artist's studio, gallery">
+      <span class="mark" aria-hidden="true">A</span>
+      <span>Artist's Studio</span>
+    </a>
     <nav aria-label="Main navigation">
-      <button class="nav-link" type="button" data-page="gallery" aria-current="page">Works</button>
-      <button class="nav-link" type="button" data-page="about">About</button>
+      <button class="nav-link" type="button" data-page="gallery" aria-current="page">Gallery</button>
+      <button class="nav-link" type="button" data-page="about">About the artist</button>
     </nav>
   </header>
 
@@ -226,38 +336,59 @@
     <section class="page gallery-page is-active" id="gallery-page" aria-labelledby="gallery-title">
       <div class="gallery-intro">
         <div>
-          <p class="eyebrow">Paintings</p>
-          <h1 id="gallery-title">Selected works</h1>
-          <p class="gallery-summary">Color, depth, and movement through space.</p>
+          <p class="eyebrow">A collection of original work</p>
+          <h1 id="gallery-title">Gallery of Art</h1>
+          <p class="gallery-summary">A growing collection, gathered in one place.</p>
         </div>
       </div>
       <div class="gallery-status">
-        <span id="art-count">Loading works...</span>
+        <span id="art-count">Your collection</span>
         <span class="status-message" id="status-message" role="status" aria-live="polite"></span>
+      </div>
+      <div class="empty-state" id="empty-state">
+        <img class="empty-art" src="images/img_5261.webp" alt="Artwork from the collection">
+        <div class="empty-copy">
+          <p class="eyebrow">Your studio, online</p>
+          <h2>Make room for your work.</h2>
+          <p>A growing collection of paintings, photographs, and the ideas between them.</p>
+        </div>
       </div>
       <div class="art-grid" id="art-grid" aria-live="polite"></div>
     </section>
 
     <section class="about-page" id="about-page" aria-labelledby="about-title">
       <div class="about-heading">
-        <p class="eyebrow">Artist statement</p>
-        <h1 id="about-title">About</h1>
+        <p class="eyebrow">The person behind the work</p>
+        <h1 id="about-title">About the artist</h1>
       </div>
       <div class="about-copy">
-        <p>I am self-trained and have little to no ability to depict anything accurately. I enjoy painting as a way to explore color combinations, depth, and movement through space.</p>
-        <p>I start with an idea of what I want to portray and apply a low to no judgment approach to what follows. I enjoy trying new techniques and applying different "rules" for a given painting or series of paintings because that grants me a greater sense of purpose and commitment to my work.</p>
-        <p>My aim is to make paintings that bring some feeling to the viewer that hopefully does not include repulsion.</p>
+        <p>This is your space to introduce yourself and the ideas, places, and moments that find their way into your work.</p>
+        <h2>Your story</h2>
+        <p>Write a little about yourself, your practice, or what inspires you. Your note is saved in this browser.</p>
+        <textarea class="bio-field" id="artist-bio" aria-label="About the artist" placeholder="I'm an artist based in... My work explores..."></textarea>
+        <p class="save-note" id="bio-save-note" aria-live="polite"></p>
       </div>
     </section>
   </main>
 
+  <footer class="site-footer">
+    <span>Artist's Studio</span>
+    <span>Made for looking closely.</span>
+  </footer>
+
   <script>
     const artGrid = document.querySelector('#art-grid');
+    const emptyState = document.querySelector('#empty-state');
     const artCount = document.querySelector('#art-count');
     const statusMessage = document.querySelector('#status-message');
+    const bioField = document.querySelector('#artist-bio');
+    const bioSaveNote = document.querySelector('#bio-save-note');
+    let saveTimer;
 
     function updateCount(count) {
       artCount.textContent = `${count} ${count === 1 ? 'artwork' : 'artworks'}`;
+      emptyState.classList.toggle('hidden', count > 0);
+      artGrid.classList.toggle('hidden', count === 0);
     }
 
     function createArtworkCard(artwork, index) {
@@ -319,9 +450,28 @@
       });
     });
 
+    try {
+      bioField.value = localStorage.getItem('artists-studio-bio') || '';
+    } catch {
+      bioSaveNote.textContent = 'Browser storage is unavailable; your note may not be saved.';
+    }
+
+    bioField.addEventListener('input', () => {
+      window.clearTimeout(saveTimer);
+      saveTimer = window.setTimeout(() => {
+        try {
+          localStorage.setItem('artists-studio-bio', bioField.value);
+          bioSaveNote.textContent = 'Saved in this browser.';
+        } catch {
+          bioSaveNote.textContent = 'Could not save your note in this browser.';
+        }
+      }, 350);
+    });
+
     renderGallery().catch(() => {
       statusMessage.textContent = 'The gallery could not be loaded.';
       artCount.textContent = 'Gallery unavailable';
+      emptyState.classList.remove('hidden');
     });
   </script>
 </body>

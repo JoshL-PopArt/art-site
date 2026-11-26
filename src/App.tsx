@@ -8,7 +8,6 @@ import { artworks, type Artwork } from '@/data/artworks';
 
 export default function App() {
   const [lightboxArtwork, setLightboxArtwork] = useState<Artwork | null>(null);
-  const [inquiryPrefill, setInquiryPrefill] = useState<{ title: string } | null>(null);
 
   return (
     <div className="min-h-screen bg-wall font-light text-ink">
@@ -20,7 +19,7 @@ export default function App() {
             Selected works
           </h1>
           <p className="mt-7 max-w-[34ch] text-soft">
-            Original pieces by Josh Lichtblau. Works marked available can be inquired about below.
+            Original pieces by Josh Lichtblau. Works marked available can be inquired about in the contact section below.
           </p>
         </div>
 
@@ -33,13 +32,12 @@ export default function App() {
               key={artwork.title}
               artwork={artwork}
               onOpen={setLightboxArtwork}
-              onInquire={(piece) => setInquiryPrefill({ title: piece.title })}
             />
           ))}
         </div>
 
         <AboutSection />
-        <ContactSection prefill={inquiryPrefill} />
+        <ContactSection />
       </main>
 
       <footer className="border-t border-line px-[clamp(20px,5vw,64px)] py-[30px] text-sm text-soft">

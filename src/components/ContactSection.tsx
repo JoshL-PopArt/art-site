@@ -18,10 +18,9 @@ const emptyForm: InquiryForm = { name: '', email: '', artwork: '', message: '', 
 type Status = 'idle' | 'sending' | 'sent' | 'error';
 
 const details = [
-  { label: 'Email', value: 'you@example.com', href: 'mailto:you@example.com' },
-  { label: 'Phone', value: '(555) 555-0123' },
-  { label: 'Studio', value: 'City, State' },
-  { label: 'Instagram', value: '@yourname', href: 'https://instagram.com/yourname' },
+  { label: 'Email', value: 'josh.lichtblau@gmail.com', href: 'mailto:josh.lichtblau@gmail.com' },
+  { label: 'Phone', value: '(609) 240-4139' },
+  { label: 'Studio', value: 'Princeton, New Jersey' },
 ];
 
 const fieldClass =

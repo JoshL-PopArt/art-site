@@ -7,7 +7,7 @@ interface ArtworkCardProps {
 }
 
 export default function ArtworkCard({ artwork, onOpen, onInquire }: ArtworkCardProps) {
-  const { title, year, medium, size, image } = artwork;
+  const { title, year, medium, size, available, image } = artwork;
 
   return (
     <figure className="group">
@@ -21,7 +21,7 @@ export default function ArtworkCard({ artwork, onOpen, onInquire }: ArtworkCardP
         {image ? (
           <img
             src={`${import.meta.env.BASE_URL}${image}`}
-            alt={`${title}, ${medium}`}
+            alt={`${title}, ${medium} by Josh Lichtblau`}
             loading="lazy"
             className="block aspect-[4/5] w-full object-cover transition-transform duration-700 group-hover:scale-[1.02]"
           />
@@ -40,7 +40,14 @@ export default function ArtworkCard({ artwork, onOpen, onInquire }: ArtworkCardP
           <br />
           {size}
         </span>
-        <>
+        <span className="col-span-2 mt-2 flex items-center gap-2 text-sm text-soft">
+          <span
+            aria-hidden="true"
+            className={`h-2 w-2 rounded-full ${available ? 'bg-[#2e7d4f]' : 'bg-[#b5b5b0]'}`}
+          />
+          {available ? 'Available' : 'Not available'}
+        </span>
+        {available && (
           <a
             href="#contact"
             onClick={() => onInquire(artwork)}
@@ -48,7 +55,7 @@ export default function ArtworkCard({ artwork, onOpen, onInquire }: ArtworkCardP
           >
             Inquire about this piece
           </a>
-        </>
+        )}
       </figcaption>
     </figure>
   );

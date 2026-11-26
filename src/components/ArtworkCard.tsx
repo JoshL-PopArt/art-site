@@ -3,10 +3,9 @@ import type { Artwork } from '@/data/artworks';
 interface ArtworkCardProps {
   artwork: Artwork;
   onOpen: (artwork: Artwork) => void;
-  onInquire: (artwork: Artwork) => void;
 }
 
-export default function ArtworkCard({ artwork, onOpen, onInquire }: ArtworkCardProps) {
+export default function ArtworkCard({ artwork, onOpen }: ArtworkCardProps) {
   const { title, year, medium, size, available, image } = artwork;
 
   return (
@@ -50,7 +49,6 @@ export default function ArtworkCard({ artwork, onOpen, onInquire }: ArtworkCardP
         {available && (
           <a
             href="#contact"
-            onClick={() => onInquire(artwork)}
             className="col-span-2 mt-1.5 text-soft no-underline transition-colors hover:text-ink"
           >
             Inquire about this piece

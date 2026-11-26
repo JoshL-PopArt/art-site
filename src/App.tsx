@@ -20,7 +20,7 @@ export default function App() {
             Selected works
           </h1>
           <p className="mt-7 max-w-[34ch] text-soft">
-            Original pieces by Josh Lichtblau. Every work is available to inquire about.
+            Original pieces by Josh Lichtblau. Works marked available can be inquired about below.
           </p>
         </div>
 

@@ -43,6 +43,7 @@ export const artworks: Artwork[] = [
   { title: 'Basque in the summer', year: 'Recent', medium: 'Oil on canvas', size: 'Size on request', available: false, image: 'images/img-7254.jpg' },
   { title: 'Is this my face?', year: 'Recent', medium: 'Acrylic on canvas', size: 'Size on request', available: false, image: 'images/img-7284.jpg' },
   { title: 'Lost in the prism', year: 'Recent', medium: 'Acrylic on canvas', size: 'Size on request', available: false, image: 'images/img-7304.jpg' },
+  { title: 'Cracked up and down', year: 'Recent', medium: 'Oil on canvas', size: 'Size on request', available: true, image: 'images/img-7365.jpg' },
   { title: 'Tangled mostly in blue', year: 'Recent', medium: 'Oil on canvas', size: 'Size on request', available: false, image: 'images/img-7308.jpg' },
   { title: 'Through the stained glass', year: 'Recent', medium: 'Acrylic on canvas', size: 'Size on request', available: false, image: 'images/img-7974.jpg' },
 ];
